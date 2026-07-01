@@ -1,0 +1,26 @@
+Segment,traffic_source,total_customers
+At Risk,Paid Search,22572
+Regular,Campaign,3377
+VIP,Campaign,747
+Loyal Customers,Referral,3847
+Lost,Paid Search,8655
+VIP,Paid Search,7593
+Loyal Customers,Paid Search,8906
+At Risk,Referral,10065
+VIP,Referral,4027
+At Risk,Campaign,3145
+Regular,Referral,3549
+Regular,Paid Search,10458
+Lost,Referral,3068
+Lost,Campaign,2422
+Loyal Customers,Campaign,1704
+Regular,Organic,8420
+VIP,Direct,5751
+Lost,Organic,7272
+At Risk,Organic,19839
+Regular,Direct,5764
+VIP,Organic,6942
+Lost,Direct,5060
+At Risk,Direct,15702
+Loyal Customers,Direct,6071
+Loyal Customers,Organic,7778
