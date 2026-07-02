@@ -18,7 +18,10 @@ This analysis evaluates the end-to-end customer journey of a high-volume e-comme
 
 ### 1. Funnel Performance: The Conversion Journey & Drop-off Analysis
 Analyzing the user journey from the first click to the final purchase reveals that while the core product offerings are highly desired, technical friction is bottlenecking maximum revenue potential.
-![image](<img width="1080" height="2400" alt="1000184087" src="https://github.com/user-attachments/assets/d378a261-4e70-4f09-9a2e-3201e3155e33" />)
+
+<img width="1036" height="969" alt="1000184105" src="https://github.com/user-attachments/assets/93300b57-ccce-4809-9518-e923ecc6bbbf" />
+
+
 
 * **Top-of-Funnel Leak: 47% of Traffic Bounces Before Viewing a Single Product**
   Although the platform attracts substantial traffic, nearly half of the visitors drop off before interacting with the product catalog (Visit-to-View rate is 52.65%). This early exit suggests a disconnect at the top of the funnel, potentially pointing to misaligned ad targeting bringing in low-intent traffic, or landing page performance issues (e.g., slow load times).
@@ -34,7 +37,8 @@ Analyzing the user journey from the first click to the final purchase reveals th
 ### 2. Omnichannel Behavior & Device Performance
 By analyzing traffic sources and device usage against actual revenue, it becomes clear that the platform serves a dual purpose: a direct digital storefront and a highly effective interactive catalog for physical retail.
 
-![ضع صورة الموبايل والديسكتوب هنـــــا]()
+<img width="873" height="776" alt="1000184110" src="https://github.com/user-attachments/assets/abaf6b31-bac5-4ec6-aefe-22f255988c66" />
+
 
 * **The Mobile Research Hub: Mobile Drives 55% of Traffic but Yields the Lowest Conversion (4.19%)**
   Despite dominating user acquisition with over 3.57 million visits (55% of total traffic), mobile platforms struggle to convert directly. In contrast, desktop traffic is significantly lower (1.62 million visits) but converts at a peak rate of 6.16%. Furthermore, desktop users view an average of 5.67 pages per session compared to just 3.77 on mobile, even though the average session duration is identical across both devices (2.85 minutes). This highlights severe mobile UI/UX friction that is wasting high-intent traffic.
@@ -46,7 +50,9 @@ By analyzing traffic sources and device usage against actual revenue, it becomes
 ### 3. Customer Base Health & Retention Dynamics (RFM & Cohort Analysis)
 By integrating RFM segmentation with Cohort retention trends, we can look beyond top-of-funnel acquisition to evaluate the true health of the customer base. This analysis uncovers a stark contrast between a highly profitable core audience and a massive, immediate retention leak.
 
-![ضع صورة الكوهورت والـ RFM هنـــــا]()
+<img width="1043" height="1044" alt="1000184111" src="https://github.com/user-attachments/assets/4cc59e24-172a-4277-b612-0784d5fa1a20" /> <img width="1057" height="1013" alt="1000184112" src="https://github.com/user-attachments/assets/af67070e-300f-43ad-8437-2ff5cfbb9275" />
+
+
 
 * **The Retention Crisis: 53% of the Database is Churning, While a Core 18% Sustains the Business**
   Following the Pareto (80/20) principle, this business relies heavily on a small core of users—VIPs (7%) and Loyal Customers (11%)—who make up only 18% of the total base but drive continuous, high-margin revenue with near-zero re-acquisition costs. Conversely, a staggering 53% of the database is either 'Lost' (25%) or 'At Risk' (28%), highlighting a massive profitability leak.
@@ -62,7 +68,8 @@ By integrating RFM segmentation with Cohort retention trends, we can look beyond
 ### 4. Marketing ROI: The Acquisition Trap vs. Organic Loyalty
 Evaluating traffic sources purely by top-of-funnel conversion rates creates a highly deceptive narrative. By cross-referencing clickstream acquisition channels with our RFM customer segments, the true Long-Term Value (LTV) and ROI of each marketing channel are definitively exposed.
 
-![ضع صورة مصادر الترافيك والـ RFM هنـــــا]()
+<img width="2184" height="712" alt="1000184115" src="https://github.com/user-attachments/assets/2dd9926c-3d61-4e4f-99a5-8dde441d1d90" />
+
 
 * **The Paid Acquisition Trap: High Initial Conversion, Zero Loyalty**
   At first glance, Marketing Campaigns appear highly effective, driving the highest add-to-cart rates (35.12%) and overall funnel conversion (7.10%). However, RFM data exposes the "Conversion Illusion": these campaigns predominantly attract "discount hunters." Campaign traffic forms the highest percentage of the 'Lost' (9.1%) and 'Regular' (10.7%) segments, but the absolute lowest in the 'VIP' segment (only 3.0%). The Customer Acquisition Cost (CAC) spent here is essentially wasted on one-time buyers who contribute heavily to the Month-1 churn.
