@@ -18,8 +18,7 @@ This analysis evaluates the end-to-end customer journey of a high-volume e-comme
 
 ### 1. Funnel Performance: The Conversion Journey & Drop-off Analysis
 Analyzing the user journey from the first click to the final purchase reveals that while the core product offerings are highly desired, technical friction is bottlenecking maximum revenue potential.
-
-![ضع صورة الـ Funnel هنـــــا]()
+![image](<img width="1080" height="2400" alt="1000184087" src="https://github.com/user-attachments/assets/d378a261-4e70-4f09-9a2e-3201e3155e33" />)
 
 * **Top-of-Funnel Leak: 47% of Traffic Bounces Before Viewing a Single Product**
   Although the platform attracts substantial traffic, nearly half of the visitors drop off before interacting with the product catalog (Visit-to-View rate is 52.65%). This early exit suggests a disconnect at the top of the funnel, potentially pointing to misaligned ad targeting bringing in low-intent traffic, or landing page performance issues (e.g., slow load times).
