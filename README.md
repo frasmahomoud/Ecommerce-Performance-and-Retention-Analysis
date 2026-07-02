@@ -107,3 +107,27 @@ To ensure these strategic initiatives drive the desired business impact, a dedic
 1. **Cart Abandonment Rate:** To measure the success of the checkout UI/UX updates and express payment integrations.
 2. **Month-1 Retention Rate:** To validate the effectiveness of the new automated "Welcome Series" onboarding sequence.
 3. **'At-Risk' Activation Rate:** To track the conversion efficiency of the reallocated retargeting budget on the 'At-Risk' segment.
+
+---
+
+## 🛠️ Reproducibility & Local Setup
+
+To replicate this analysis or run the interactive dashboard locally on your machine, follow these steps:
+
+**1. Data Source (Kaggle):** The raw datasets (`fact_transaction.parquet` and `fact_clickstream.parquet`) are required to execute the notebooks and SQL queries. Due to file size limits, they are not included in this repository.
+
+You can download the dataset directly from Kaggle:
+[🔗 Elecmart Retail Analytics Dataset](https://www.kaggle.com/datasets/ajibsss/elecmart-retail-analytics-dataset)
+
+Alternatively, use the Kaggle API CLI to download and extract the data into the root directory:
+```bash
+kaggle datasets download -d ajibsss/elecmart-retail-analytics-dataset
+unzip -q elecmart-retail-analytics-dataset.zip
+```
+---
+Environment Setup:
+git clone [https://github.com/frasmahomoud/Ecommerce-Performance-and-Retention-Analysis.git](https://github.com/frasmahomoud/Ecommerce-Performance-and-Retention-Analysis.git)
+
+cd Ecommerce-Performance-and-Retention-Analysis
+pip install -r requirements.txt
+
