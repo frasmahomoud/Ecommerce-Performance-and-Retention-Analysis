@@ -3,7 +3,7 @@
 ## 📖 Project Background
 This project analyzes the digital storefront and omnichannel performance of a high-volume e-commerce retailer. With the platform serving as a critical research hub that influences over $100M in physical retail revenue, the primary objective of this analysis is to evaluate the end-to-end customer journey. The analysis focuses on identifying friction points in the conversion funnel, exposing the true ROI of acquisition channels, and uncovering strategic opportunities to maximize Customer Lifetime Value (LTV).
 
-**[🔗 Click Here to View the Interactive Dashboard](https://ecommerce-performance-and-retention-analysis.streamlit.app/)**
+**[🔗 Click Here to View the Dashboards](https://ecommerce-performance-and-retention-analysis.streamlit.app/)**
 ---
 
 ## 🎯 Executive Summary
