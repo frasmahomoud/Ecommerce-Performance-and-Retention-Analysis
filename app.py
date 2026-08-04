@@ -5,16 +5,8 @@ import numpy as np
 
 # --- 1. Page Configuration ---
 st.set_page_config(page_title="ElecMart Performance Hub", layout="wide")
-st.title("ElecMart Executive Performance Hub 📊")
+st.title("ElecMart Executive Performance Hub")
 st.markdown("---")
-
-# --- Design System (Premium Dark Theme) ---
-PRIMARY_BLUE = '#3B82F6'    # Modern SaaS Blue
-SUCCESS_GREEN = '#10B981'   # Emerald Green for good metrics
-WARNING_YELLOW = '#F59E0B'  # Amber for At-Risk
-DANGER_RED = '#EF4444'      # Red for Churn/Lost
-NEUTRAL_GRAY = '#64748B'    # Slate Gray for regular users
-BG_TRANSPARENT = 'rgba(0,0,0,0)'
 
 # --- 2. Data Loading ---
 @st.cache_data
@@ -99,9 +91,9 @@ row1_col1, row1_col2 = st.columns(2)
 with row1_col1:
     df_funnel = load_funnel()
     df_funnel['custom_text'] = df_funnel['Count'].apply(lambda x: f"{x/1e6:.1f}M" if x >= 1e6 else f"{x/1e3:.1f}k")
-    fig_funnel = px.funnel(df_funnel, x='Count', y='Stage', text='custom_text', title='Conversion Funnel (Macro Level)', color_discrete_sequence=[PRIMARY_BLUE])
-    fig_funnel.update_traces(texttemplate='<b>%{text}</b><br>%{percentInitial:.0%}', textfont=dict(size=14, color='white'))
-    fig_funnel.update_layout(template='plotly_dark', height=400, yaxis_title=None, xaxis_title=None, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
+    fig_funnel = px.funnel(df_funnel, x='Count', y='Stage', text='custom_text', title='Conversion Funnel (Macro Level)', color_discrete_sequence=['#2CA02C'])
+    fig_funnel.update_traces(texttemplate='%{text}<br>%{percentInitial:.0%}', textposition='auto', textfont=dict(size=14, color='white'))
+    fig_funnel.update_layout(height=400, yaxis_title=None, xaxis_title=None, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', margin=dict(t=40, b=0, l=0, r=0))
     st.plotly_chart(fig_funnel, use_container_width=True)
     
     with st.expander("View SQL Query"):
@@ -113,9 +105,8 @@ with row1_col1:
 
 with row1_col2:
     retention_pct = load_cohort()
-    # Changed to 'Blues' for a professional look
-    fig_cohort = px.imshow(retention_pct, text_auto='.1f', aspect="auto", color_continuous_scale='Blues', title='Customer Retention Cohort (%)')
-    fig_cohort.update_layout(template='plotly_dark', height=400, coloraxis_showscale=False, xaxis=dict(side='bottom', title='Months Since First Purchase', showgrid=False), yaxis=dict(title='', showgrid=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
+    fig_cohort = px.imshow(retention_pct, text_auto='.1f', aspect="auto", color_continuous_scale='YlGnBu', title='Customer Retention Cohort Analysis (%)')
+    fig_cohort.update_layout(height=400, coloraxis_showscale=False, xaxis=dict(side='bottom', title='Months Since First Purchase', showgrid=False), yaxis=dict(title='Cohort Month', showgrid=False), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', margin=dict(t=40, b=0, l=0, r=0))
     st.plotly_chart(fig_cohort, use_container_width=True)
     
     with st.expander("View SQL & Python Logic"):
@@ -146,15 +137,9 @@ row2_col1, row2_col2 = st.columns(2)
 
 with row2_col1:
     df_traffic = load_traffic()
-    max_val = df_traffic['overall_conversion_rate'].max()
-    
-    fig_traffic = px.bar(df_traffic, x='overall_conversion_rate', y='traffic_source', orientation='h', text='overall_conversion_rate', color_discrete_sequence=[PRIMARY_BLUE], title='Conversion Rate by Traffic Source')
-    fig_traffic.update_traces(texttemplate='<b>%{text:.2f}%</b>', textposition='outside', textfont=dict(color='white'))
-    
-    # FIX for clipped numbers: Add 15% extra padding to the right of the maximum value
-    fig_traffic.update_xaxes(range=[0, max_val * 1.15], showgrid=False, visible=False)
-    
-    fig_traffic.update_layout(template='plotly_dark', height=400, yaxis=dict(title=''), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(l=0, r=0, t=40, b=0))
+    fig_traffic = px.bar(df_traffic, x='overall_conversion_rate', y='traffic_source', orientation='h', text='overall_conversion_rate', color_discrete_sequence=['#2CA02C'], title='Conversion Rate by Traffic Source')
+    fig_traffic.update_traces(texttemplate='%{text:.2f}%', textposition='inside', textfont=dict(color='white'))
+    fig_traffic.update_layout(height=400, xaxis=dict(showgrid=False, visible=False, rangemode='tozero'), yaxis=dict(title=''), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', margin=dict(l=0, r=0, t=40, b=0))
     st.plotly_chart(fig_traffic, use_container_width=True)
     
     with st.expander("View SQL Query"):
@@ -168,20 +153,37 @@ with row2_col1:
         """, language="sql")
 
 with row2_col2:
-    # Sleek, thinner donuts (hole=0.7) with better colors
     df_device = load_devices()
-    fig_donut_dev = px.pie(df_device, values='total_sessions', names='device_type', hole=0.7, title='Traffic Share by Device Type', color_discrete_sequence=[PRIMARY_BLUE, SUCCESS_GREEN, WARNING_YELLOW])
-    fig_donut_dev.update_traces(textinfo='percent+label', textposition='outside', pull=[0.02, 0, 0], textfont=dict(color='white'))
-    fig_donut_dev.update_layout(template='plotly_dark', height=200, showlegend=False, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=10, l=40, r=40))
+    fig_donut_dev = px.pie(df_device, values='total_sessions', names='device_type', hole=0.6, title='Traffic Share by Device Type', color_discrete_sequence=['#1f77b4', '#ff7f0e', '#2ca02c'])
+    fig_donut_dev.update_traces(textinfo='percent+label', textposition='outside', pull=[0.05, 0, 0], textfont=dict(color='white'))
+    fig_donut_dev.update_layout(height=400, showlegend=False, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', margin=dict(t=40, b=20, l=80, r=80))
     st.plotly_chart(fig_donut_dev, use_container_width=True)
     
+    with st.expander("View SQL Query"):
+        st.code("""
+        SELECT device_type, COUNT(session_id) AS total_sessions,
+               ROUND(SUM(CAST(purchased_flag AS INT)) * 100.0 / COUNT(session_id), 2) AS conversion_rate
+        FROM fact_clickstream GROUP BY device_type ORDER BY total_sessions DESC;
+        """, language="sql")
+
+st.markdown("---")
+
+# --- 6. Row 3: Retention & RFM ---
+row3_col1, row3_col2 = st.columns(2)
+
+with row3_col1:
     df_retention = load_retention_profile()
-    fig_retention = px.pie(df_retention, values='customer_count', names='customer_type', hole=0.7, title='Customer Retention Profile', color_discrete_sequence=[SUCCESS_GREEN, NEUTRAL_GRAY])
-    fig_retention.update_traces(textinfo='percent+label', textposition='outside', pull=[0.02, 0], textfont=dict(color='white'))
-    fig_retention.update_layout(template='plotly_dark', height=200, showlegend=False, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=10, l=40, r=40))
+    fig_retention = px.pie(df_retention, values='customer_count', names='customer_type', hole=0.6, title='Customer Retention Profile', color_discrete_sequence=['#2CA02C', '#B0BEC5'])
+    fig_retention.update_traces(textinfo='percent+label', textposition='outside', pull=[0.05, 0])
+    
+    retention_labels = fig_retention.data[0].labels
+    retention_color_map = {'Repeat Customer': 'white', 'One-Time Buyer': 'white'}
+    fig_retention.data[0].textfont.color = [retention_color_map.get(label, 'white') for label in retention_labels]
+    
+    fig_retention.update_layout(height=400, showlegend=False, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', margin=dict(t=40, b=0, l=80, r=80))
     st.plotly_chart(fig_retention, use_container_width=True)
     
-    with st.expander("View Retention SQL Query"):
+    with st.expander("View SQL Query"):
         st.code("""
         WITH Customer_Orders AS (
             SELECT customer_id, LAG(transaction_timestamp) OVER(PARTITION BY customer_id ORDER BY transaction_timestamp) AS prev_transaction_timestamp, transaction_timestamp
@@ -192,18 +194,16 @@ with row2_col2:
         FROM Customer_Orders GROUP BY customer_type;
         """, language="sql")
 
-st.markdown("---")
-
-# --- 6. Row 3: RFM Treemap & Segment Traffic Stacked Bar ---
-row3_col1, row3_col2 = st.columns(2)
-
-with row3_col1:
+with row3_col2:
     segment_counts = load_rfm_segments()
-    # Meaningful semantic colors for Treemap
-    color_map = {'VIP': SUCCESS_GREEN, 'Loyal Customers': '#34D399', 'Regular': NEUTRAL_GRAY, 'At Risk': WARNING_YELLOW, 'Lost': DANGER_RED}
+    color_map = {'VIP': '#2CA02C', 'Loyal Customers': '#98DF8A', 'Regular': '#C7C7C7', 'At Risk': '#FF7F0E', 'Lost': '#D62728'}
     fig_treemap = px.treemap(segment_counts, path=[px.Constant("All Customers"), 'Segment'], values='Customer_Count', title='RFM Customer Segments', color='Segment', color_discrete_map=color_map)
     fig_treemap.update_traces(textinfo='label+value+percent root', hovertemplate='<b>%{label}</b><br>Customers: %{value}<br>%{percentRoot:.1%} of total')
-    fig_treemap.update_layout(template='plotly_dark', height=400, margin=dict(t=40, b=0, l=0, r=0), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT)
+    
+    segment_text_color = {'VIP': 'white', 'Loyal Customers': 'black', 'Regular': 'black', 'At Risk': 'white', 'Lost': 'white'}
+    fig_treemap.data[0].textfont.color = [segment_text_color.get(label, 'black') for label in fig_treemap.data[0].labels]
+    
+    fig_treemap.update_layout(height=400, margin=dict(t=40, b=0, l=0, r=0), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
     st.plotly_chart(fig_treemap, use_container_width=True)
     
     with st.expander("View SQL & Python Logic"):
@@ -212,31 +212,54 @@ with row3_col1:
         SELECT customer_id, transaction_id, transaction_timestamp, transaction_total
         FROM fact_transaction WHERE customer_id IS NOT NULL;
         """, language="sql")
-        st.markdown("**2. RFM Scoring (Pandas)**")
+        st.markdown("**2. RFM Scoring & Segmentation (Pandas)**")
         st.code("""
+        rfm = df.groupby('customer_id').agg({
+            'transaction_timestamp': lambda x: (snapshot_date - x.max()).days,
+            'transaction_id': 'count',
+            'transaction_total': 'sum'
+        })
+        
         rfm['R'] = pd.qcut(rfm['Recency'], q=4, labels=[4, 3, 2, 1])
         rfm['F'] = pd.qcut(rfm['Frequency'].rank(method='first'), q=4, labels=[1, 2, 3, 4])
         rfm['M'] = pd.qcut(rfm['Monetary'], q=4, labels=[1, 2, 3, 4])
+        
+        conditions = [
+            (rfm['R'] == 4) & (rfm['F'] >= 3),
+            rfm['R'] == 1
+        ]
         """, language="python")
 
-with row3_col2:
-    st.markdown("<h5 style='text-align: left; color: white;'>Traffic Source Distribution by Segment</h5>", unsafe_allow_html=True)
-    segment_channels = load_segment_channels()
-    segment_channels['percentage'] = segment_channels.groupby('Segment')['total_customers'].transform(lambda x: (x / x.sum()) * 100)
+st.markdown("---")
+
+# --- 7. Row 4: Segment Traffic ---
+st.subheader("Traffic Source Distribution by Customer Segment")
+segment_channels = load_segment_channels()
+segment_channels['percentage'] = segment_channels.groupby('Segment')['total_customers'].transform(lambda x: (x / x.sum()) * 100)
+
+fig_seg_traffic = px.bar(segment_channels, y='Segment', x='percentage', color='traffic_source', orientation='h', text='percentage', color_discrete_sequence=px.colors.qualitative.Safe)
+fig_seg_traffic.update_traces(texttemplate='%{text:.1f}%', textposition='inside', insidetextanchor='middle')
+
+text_color_map = {
+    'Campaign': '#000000',
+    'Referral': '#000000',
+    'Organic': '#FFFFFF',
+    'Direct': '#FFFFFF',
+}
+
+for trace in fig_seg_traffic.data:
+    if trace.name in text_color_map:
+        trace.textfont.color = text_color_map[trace.name]
+    else:
+        trace.textfont.color = '#333333'
+
+fig_seg_traffic.update_layout(height=350, barmode='stack', xaxis=dict(title='Percentage (%)', showgrid=False), yaxis=dict(title='', showgrid=False), plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', margin=dict(t=10, b=0, l=0, r=0))
+st.plotly_chart(fig_seg_traffic, use_container_width=True)
+
+with st.expander("View SQL Query"):
+    st.code("""
+    SELECT r.Segment, c.traffic_source, COUNT(DISTINCT r.customer_id) AS total_customers
+    FROM rfm_reset r JOIN fact_clickstream c ON r.customer_id = c.customer_id
+    WHERE c.purchased_flag = True GROUP BY r.Segment, c.traffic_source;
+    """, language="sql")
     
-    # Restored the 100% Stacked Bar chart for visual variety, but with a clean discrete color palette
-    fig_seg_traffic = px.bar(segment_channels, y='Segment', x='percentage', color='traffic_source', orientation='h', text='percentage', color_discrete_sequence=px.colors.qualitative.Pastel)
-    
-    # Ensuring text fits perfectly inside the bars
-    fig_seg_traffic.update_traces(texttemplate='<b>%{text:.1f}%</b>', textposition='inside', insidetextanchor='middle', textfont=dict(color='#1E1E1E'))
-    
-    fig_seg_traffic.update_layout(template='plotly_dark', height=360, barmode='stack', legend_title_text='Traffic Source', xaxis=dict(title='Percentage (%)', showgrid=False), yaxis=dict(title='', showgrid=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=10, b=0, l=0, r=0))
-    st.plotly_chart(fig_seg_traffic, use_container_width=True)
-    
-    with st.expander("View SQL Query"):
-        st.code("""
-        SELECT r.Segment, c.traffic_source, COUNT(DISTINCT r.customer_id) AS total_customers
-        FROM rfm_reset r JOIN fact_clickstream c ON r.customer_id = c.customer_id
-        WHERE c.purchased_flag = True GROUP BY r.Segment, c.traffic_source;
-        """, language="sql")
-        
