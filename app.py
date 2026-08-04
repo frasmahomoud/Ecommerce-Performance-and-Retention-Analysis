@@ -1,17 +1,15 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import numpy as np
 
 # --- 1. Page Configuration ---
-st.set_page_config(page_title="ElecMart Performance Hub", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="ElecMart Performance Hub", layout="wide")
 st.title("ElecMart Executive Performance Hub 📊")
 st.markdown("---")
 
-# --- Color Palette ---
-PRIMARY_COLOR = '#00BFA5' # Teal
-SECONDARY_COLORS = ['#00BFA5', '#1f77b4', '#FF7F0E', '#E57373', '#9575CD']
+# --- Color Palette (Unified & Eye-friendly for Dark Mode) ---
+PRIMARY_GREEN = '#00E676'  # Modern bright green, very comfortable in dark mode
 BG_TRANSPARENT = 'rgba(0,0,0,0)'
 
 # --- 2. Data Loading ---
@@ -82,54 +80,44 @@ row1_col1, row1_col2 = st.columns(2)
 with row1_col1:
     df_funnel = load_funnel()
     df_funnel['custom_text'] = df_funnel['Count'].apply(lambda x: f"{x/1e6:.1f}M" if x >= 1e6 else f"{x/1e3:.1f}k")
-    fig_funnel = px.funnel(df_funnel, x='Count', y='Stage', text='custom_text', title='Conversion Funnel (Macro Level)', color_discrete_sequence=[PRIMARY_COLOR])
-    fig_funnel.update_traces(texttemplate='<b>%{text}</b><br>%{percentInitial:.0%}', textfont=dict(size=14, color='white'))
-    fig_funnel.update_layout(template='plotly_dark', height=350, yaxis_title=None, xaxis_title=None, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
+    fig_funnel = px.funnel(df_funnel, x='Count', y='Stage', text='custom_text', title='Conversion Funnel (Macro Level)', color_discrete_sequence=[PRIMARY_GREEN])
+    fig_funnel.update_traces(texttemplate='<b>%{text}</b><br>%{percentInitial:.0%}', textfont=dict(size=14, color='black')) # Black text on green for contrast
+    fig_funnel.update_layout(template='plotly_dark', height=400, yaxis_title=None, xaxis_title=None, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
     st.plotly_chart(fig_funnel, use_container_width=True)
 
 with row1_col2:
     retention_pct = load_cohort()
-    # Using 'Teal' color scale to match the Primary Color
-    fig_cohort = px.imshow(retention_pct, text_auto='.1f', aspect="auto", color_continuous_scale='Teal', title='Customer Retention Cohort (%)')
-    fig_cohort.update_layout(template='plotly_dark', height=350, coloraxis_showscale=False, xaxis=dict(side='bottom', title='Months Since First Purchase', showgrid=False), yaxis=dict(title='', showgrid=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
+    # Changed to 'Greens' to match the Funnel and overall theme
+    fig_cohort = px.imshow(retention_pct, text_auto='.1f', aspect="auto", color_continuous_scale='Greens', title='Customer Retention Cohort (%)')
+    fig_cohort.update_layout(template='plotly_dark', height=400, coloraxis_showscale=False, xaxis=dict(side='bottom', title='Months Since First Purchase', showgrid=False), yaxis=dict(title='', showgrid=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
     st.plotly_chart(fig_cohort, use_container_width=True)
 
 st.markdown("---")
 
-# --- 5. Row 2: Traffic & Devices (Modern Progress Bars) ---
+# --- 5. Row 2: Traffic & Devices (Restored Donuts, Better Colors) ---
 row2_col1, row2_col2 = st.columns(2)
 
 with row2_col1:
     df_traffic = load_traffic()
-    fig_traffic = px.bar(df_traffic, x='overall_conversion_rate', y='traffic_source', orientation='h', text='overall_conversion_rate', color_discrete_sequence=[PRIMARY_COLOR], title='Conversion Rate by Traffic Source')
+    fig_traffic = px.bar(df_traffic, x='overall_conversion_rate', y='traffic_source', orientation='h', text='overall_conversion_rate', color_discrete_sequence=[PRIMARY_GREEN], title='Conversion Rate by Traffic Source')
     fig_traffic.update_traces(texttemplate='<b>%{text:.2f}%</b>', textposition='outside', textfont=dict(color='white'))
-    fig_traffic.update_layout(template='plotly_dark', height=250, xaxis=dict(showgrid=False, visible=False, rangemode='tozero'), yaxis=dict(title=''), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(l=0, r=0, t=40, b=0))
+    fig_traffic.update_layout(template='plotly_dark', height=400, xaxis=dict(showgrid=False, visible=False, rangemode='tozero'), yaxis=dict(title=''), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(l=0, r=0, t=40, b=0))
     st.plotly_chart(fig_traffic, use_container_width=True)
 
 with row2_col2:
-    st.markdown("<h5 style='text-align: left; color: white;'>Traffic Share by Device Type</h5>", unsafe_allow_html=True)
+    # Restored Donut for Devices with vibrant, distinct colors
     df_device = load_devices()
-    df_device['Percentage'] = (df_device['total_sessions'] / df_device['total_sessions'].sum()) * 100
-    df_device['Dummy'] = 'Devices' # Needed for horizontal stacked bar
+    fig_donut_dev = px.pie(df_device, values='total_sessions', names='device_type', hole=0.6, title='Traffic Share by Device Type', color_discrete_sequence=['#1976D2', '#FFCA28', PRIMARY_GREEN])
+    fig_donut_dev.update_traces(textinfo='percent+label', textposition='outside', pull=[0.05, 0, 0], textfont=dict(color='white'))
+    fig_donut_dev.update_layout(template='plotly_dark', height=200, showlegend=False, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=10, l=40, r=40))
+    st.plotly_chart(fig_donut_dev, use_container_width=True)
     
-    # Modern Horizontal Stacked Bar instead of Donut
-    fig_dev = px.bar(df_device, y='Dummy', x='Percentage', color='device_type', orientation='h', text='Percentage', color_discrete_sequence=['#1f77b4', '#00BFA5', '#FF7F0E'])
-    fig_dev.update_traces(texttemplate='<b>%{x:.1f}%</b><br>%{data.name}', textposition='inside', insidetextanchor='middle')
-    fig_dev.update_layout(template='plotly_dark', height=150, barmode='stack', showlegend=False, xaxis=dict(visible=False), yaxis=dict(visible=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=10, b=0, l=0, r=0))
-    st.plotly_chart(fig_dev, use_container_width=True)
-    
-    st.markdown("<br>", unsafe_allow_html=True) # Spacer
-    
-    st.markdown("<h5 style='text-align: left; color: white;'>Customer Retention Profile</h5>", unsafe_allow_html=True)
+    # Restored Donut for Retention with theme-matching colors
     df_retention = load_retention_profile()
-    df_retention['Percentage'] = (df_retention['customer_count'] / df_retention['customer_count'].sum()) * 100
-    df_retention['Dummy'] = 'Retention'
-    
-    # Modern Horizontal Stacked Bar instead of Donut
-    fig_ret = px.bar(df_retention, y='Dummy', x='Percentage', color='customer_type', orientation='h', text='Percentage', color_discrete_sequence=['#00BFA5', '#546E7A'])
-    fig_ret.update_traces(texttemplate='<b>%{x:.1f}%</b><br>%{data.name}', textposition='inside', insidetextanchor='middle')
-    fig_ret.update_layout(template='plotly_dark', height=150, barmode='stack', showlegend=False, xaxis=dict(visible=False), yaxis=dict(visible=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=10, b=0, l=0, r=0))
-    st.plotly_chart(fig_ret, use_container_width=True)
+    fig_retention = px.pie(df_retention, values='customer_count', names='customer_type', hole=0.6, title='Customer Retention Profile', color_discrete_sequence=[PRIMARY_GREEN, '#546E7A'])
+    fig_retention.update_traces(textinfo='percent+label', textposition='outside', pull=[0.05, 0], textfont=dict(color='white'))
+    fig_retention.update_layout(template='plotly_dark', height=200, showlegend=False, plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=10, l=40, r=40))
+    st.plotly_chart(fig_retention, use_container_width=True)
 
 st.markdown("---")
 
@@ -138,8 +126,8 @@ row3_col1, row3_col2 = st.columns(2)
 
 with row3_col1:
     segment_counts = load_rfm_segments()
-    # Updated Color Map for Dark Theme compatibility
-    color_map = {'VIP': '#00BFA5', 'Loyal Customers': '#4DB6AC', 'Regular': '#78909C', 'At Risk': '#FFB74D', 'Lost': '#E57373'}
+    # Fixed Treemap colors to be vibrant and distinct in Dark Mode
+    color_map = {'VIP': PRIMARY_GREEN, 'Loyal Customers': '#69F0AE', 'Regular': '#78909C', 'At Risk': '#FFCA28', 'Lost': '#EF5350'}
     fig_treemap = px.treemap(segment_counts, path=[px.Constant("All Customers"), 'Segment'], values='Customer_Count', title='RFM Customer Segments', color='Segment', color_discrete_map=color_map)
     fig_treemap.update_traces(textinfo='label+value+percent root', hovertemplate='<b>%{label}</b><br>Customers: %{value}<br>%{percentRoot:.1%} of total')
     fig_treemap.update_layout(template='plotly_dark', height=400, margin=dict(t=40, b=0, l=0, r=0), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT)
@@ -149,17 +137,13 @@ with row3_col2:
     segment_channels = load_segment_channels()
     segment_channels['percentage'] = segment_channels.groupby('Segment')['total_customers'].transform(lambda x: (x / x.sum()) * 100)
     
-    # Pivoting data for Heatmap instead of Stacked Bar
     heatmap_data = segment_channels.pivot(index='Segment', columns='traffic_source', values='percentage')
-    
-    # Reordering rows to make logical sense (Best to Worst)
     ordered_segments = ['VIP', 'Loyal Customers', 'Regular', 'At Risk', 'Lost']
     existing_segments = [s for s in ordered_segments if s in heatmap_data.index]
     heatmap_data = heatmap_data.reindex(existing_segments)
     
-    fig_seg_heatmap = px.imshow(heatmap_data, text_auto='.1f', aspect="auto", color_continuous_scale='Blues', title='Traffic Distribution by Segment (%)')
+    # Changed Heatmap from Blues to Greens to unify the entire dashboard
+    fig_seg_heatmap = px.imshow(heatmap_data, text_auto='.1f', aspect="auto", color_continuous_scale='Greens', title='Traffic Distribution by Segment (%)')
     fig_seg_heatmap.update_layout(template='plotly_dark', height=400, coloraxis_showscale=False, xaxis=dict(side='bottom', title='', showgrid=False), yaxis=dict(title='', showgrid=False), plot_bgcolor=BG_TRANSPARENT, paper_bgcolor=BG_TRANSPARENT, margin=dict(t=40, b=0, l=0, r=0))
     st.plotly_chart(fig_seg_heatmap, use_container_width=True)
-
-# Note: SQL Expander buttons were removed in this clean UI version to reduce clutter, 
-# but they can be easily re-added using st.expander() below each chart if needed for the portfolio.
+    
