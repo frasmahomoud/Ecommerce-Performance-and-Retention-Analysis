@@ -1,4 +1,10 @@
+
 # ElecMart — Funnel, Retention & Customer Value Analysis
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![DuckDB](https://img.shields.io/badge/DuckDB-SQL-yellow)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 
 **[Live Dashboard](https://ecommerce-performance-and-retention-analysis.streamlit.app/)**
 
@@ -6,8 +12,7 @@ Funnel, retention and customer-value analysis of 14.5M sessions and 900K transac
 from a synthetic omnichannel electronics retailer. Main window: 2025, with a three-year
 trend for context.
 
-![Overview](IMAGE_1_URL)
-
+<img width="1838" height="933" alt="1" src="https://github.com/user-attachments/assets/25d12090-0e19-4558-bb73-06b9f1cfcea8" />
 ## What this project does
 
 Reads the raw Kaggle parquet files, builds every metric in SQL, adds a statistical layer
@@ -41,9 +46,9 @@ highest revenue per customer by signup channel ($3,815 vs Online $2,779).
 **Returns were being counted as revenue.** 5.5% of orders are returned. Gross revenue
 $451.7M vs net $426.6M.
 
-![Customers](IMAGE_2_URL)
+<img width="1790" height="838" alt="2" src="https://github.com/user-attachments/assets/1283e5af-326c-4109-97a9-cef0180b9644" />
 
-![Retention](IMAGE_3_URL)
+<img width="1787" height="667" alt="3 1" src="https://github.com/user-attachments/assets/67a7e826-ac5b-48f8-a5a8-2bb6e10899f6" />
 
 ## What I would do about it
 
@@ -60,8 +65,7 @@ $451.7M vs net $426.6M.
   signal in this data.
 - **Report net revenue and track return rate** as a standing KPI.
 
-![Products](IMAGE_4_URL)
-
+<img width="1762" height="852" alt="4 1" src="https://github.com/user-attachments/assets/26431f9c-399f-4066-8a38-b59caa5751d7" />
 ## What changed after verification
 
 The first version of this project made claims that did not survive checking against the
