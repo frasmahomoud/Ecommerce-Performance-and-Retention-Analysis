@@ -1,133 +1,115 @@
-# E-Commerce Omnichannel & Retention Analytics 📊
+# ElecMart — Funnel, Retention & Customer Value Analysis
 
-## 📖 Project Background
-This project analyzes the digital storefront and omnichannel performance of a high-volume e-commerce retailer. With the platform serving as a critical research hub that influences over $100M in physical retail revenue, the primary objective of this analysis is to evaluate the end-to-end customer journey. The analysis focuses on identifying friction points in the conversion funnel, exposing the true ROI of acquisition channels, and uncovering strategic opportunities to maximize Customer Lifetime Value (LTV).
+**[Live Dashboard](https://ecommerce-performance-and-retention-analysis.streamlit.app/)**
 
-**[🔗 Click Here to View the Dashboards](https://ecommerce-performance-and-retention-analysis.streamlit.app/)**
----
+Funnel, retention and customer-value analysis of 14.5M sessions and 900K transactions
+from a synthetic omnichannel electronics retailer. Main window: 2025, with a three-year
+trend for context.
 
-## 🎯 Executive Summary
-This analysis evaluates the end-to-end customer journey of a high-volume e-commerce platform, focusing on acquisition efficiency, omnichannel behavior, and customer lifetime value (LTV). By integrating Funnel, Cohort, and RFM analyses, this project identifies critical revenue leaks and strategic growth opportunities.
+![Overview](IMAGE_1_URL)
 
-**Key Findings:**
-* **The Omnichannel Reality ($100M Offline Impact):** The website functions heavily as a research catalog for high-ticket items. While mobile drives 55% of online traffic with a low conversion rate (4.19%), online research directly influenced over $100M in in-store revenue, boasting a massive Average Order Value (AOV) of $1,628.
-* **The 80/20 Retention Crisis:** The business relies heavily on a core 18% of the customer base (VIP & Loyal segments) to drive sustainable profitability. Conversely, 53% of customers are currently At-Risk or Lost, primarily driven by an 86% churn rate immediately following their first purchase (The Month 1 Cliff).
-* **The Paid Acquisition Trap:** Paid Marketing Campaigns create a conversion illusion. They yield quick initial sales but fail to generate long-term value, bringing in the highest percentage of one-time buyers (Lost segment). In contrast, Organic Search and Direct traffic are the true LTV drivers, generating over 50% of all VIP customers.
-* **The Checkout Bottleneck:** Despite a solid overall conversion rate (4.93%) indicating strong product-market fit, 66.4% of high-intent users abandon their carts at the final step, signaling severe UI/UX friction during the checkout process.
+## What this project does
 
----
+Reads the raw Kaggle parquet files, builds every metric in SQL, adds a statistical layer
+in Python, and serves the results through an interactive Streamlit dashboard. The
+dashboard reads pre-aggregated CSVs only, so the numbers on screen and the numbers in the
+queries come from the same place.
 
-### 1. Funnel Performance: The Conversion Journey & Drop-off Analysis
-Analyzing the user journey from the first click to the final purchase reveals that while the core product offerings are highly desired, technical friction is bottlenecking maximum revenue potential.
+## What I found
 
-<img width="1036" height="969" alt="1000184105" src="https://github.com/user-attachments/assets/93300b57-ccce-4809-9518-e923ecc6bbbf" />
+**The business is moving online.** Store share of revenue fell from 54.2% to 28.9% across
+2023–2025, while session conversion rose from 2.37% to 4.93%. Online now drives 71% of
+revenue directly.
 
+**"At Risk" is the revenue core, not a leak.** That segment is 26.7% of customers but
+42.1% of revenue ($153.8M) — more than VIP and Loyal combined (33.6%).
 
+**The 80/20 rule does not hold.** 35.4% of customers account for 80% of revenue. Top 10%
+hold 41.4%, top 20% hold 61.7%.
 
-* **Top-of-Funnel Leak: 47% of Traffic Bounces Before Viewing a Single Product**
-  Although the platform attracts substantial traffic, nearly half of the visitors drop off before interacting with the product catalog (Visit-to-View rate is 52.65%). This early exit suggests a disconnect at the top of the funnel, potentially pointing to misaligned ad targeting bringing in low-intent traffic, or landing page performance issues (e.g., slow load times).
-* **The Checkout Bottleneck: 66.4% of High-Intent Users Abandon Their Carts**
-  The most critical friction point exists at the very end of the customer journey. Users demonstrate strong purchase intent by adding items to their carts, yet only 33.56% successfully complete the transaction. This massive 66.4% abandonment rate strongly indicates severe UI/UX flaws in the checkout process—such as hidden CTA buttons, forced account creation, or payment gateway friction.
-* **The Silver Lining: A Solid 4.93% Overall Conversion Rate Validates Product-Market Fit**
-  Despite the significant drop-offs at the very beginning and the very end of the funnel, the overall conversion rate stands at a highly competitive 4.93%. This is a strong positive indicator: the products are in demand, the pricing is competitive, and the catalog is appealing. The revenue loss is not a product or market issue; it is strictly a technical and user experience (UX) journey issue that can be optimized.
+**Retention is seasonal, not lifecycle-driven.** Every cohort sits near 25% in December
+and near 16% mid-year, regardless of age. The apparent rise by cohort age is a composition
+effect, not improving loyalty.
 
-> *Data Quality & Tracking Note: A technical review of session timestamps reveals a near-identical average duration across all funnel stages (~4.4 mins). This strongly suggests an anomaly in event tracking or synthetic data generation constraints. However, the funnel drop-off volume (View -> Cart -> Purchase) remains logically sound and highly actionable for UX optimization.*
+**Silence in month 1 is not churn.** Median time to second purchase is 124 days. Only
+17.7% buy again within 30 days, but 61.8% do within 180.
 
----
+**Mobile converts worst and is worth the most.** Lowest session conversion (4.19% vs
+Desktop 6.16%, gap 1.97 pp, 95% CI −2.01 to −1.92) yet the highest AOV ($1,004) and the
+highest revenue per customer by signup channel ($3,815 vs Online $2,779).
 
-### 2. Omnichannel Behavior & Device Performance
-By analyzing traffic sources and device usage against actual revenue, it becomes clear that the platform serves a dual purpose: a direct digital storefront and a highly effective interactive catalog for physical retail.
+**Returns were being counted as revenue.** 5.5% of orders are returned. Gross revenue
+$451.7M vs net $426.6M.
 
-<img width="873" height="776" alt="1000184110" src="https://github.com/user-attachments/assets/abaf6b31-bac5-4ec6-aefe-22f255988c66" />
+![Customers](IMAGE_2_URL)
 
+![Retention](IMAGE_3_URL)
 
-* **The Mobile Research Hub: Mobile Drives 55% of Traffic but Yields the Lowest Conversion (4.19%)**
-  Despite dominating user acquisition with over 3.57 million visits (55% of total traffic), mobile platforms struggle to convert directly. In contrast, desktop traffic is significantly lower (1.62 million visits) but converts at a peak rate of 6.16%. Furthermore, desktop users view an average of 5.67 pages per session compared to just 3.77 on mobile, even though the average session duration is identical across both devices (2.85 minutes). This highlights severe mobile UI/UX friction that is wasting high-intent traffic.
-* **The Webrooming Phenomenon: A $100M Offline Impact Driven by High AOV ($1,628)**
-  The true value of mobile and overall website traffic extends far beyond online checkout. Online research directly influenced over $100 million in offline (in-store) revenue from just 61.7K customers. Breaking down this offline revenue reveals a massive Average Order Value (AOV) of approximately $1,628. This high price point perfectly explains the "Webrooming" behavior: customers hesitate to complete large transactions on their phones. Instead, they use mobile devices to research specifications and compare prices online, before ultimately visiting a physical store to inspect the product and purchase with absolute confidence.
+## What I would do about it
 
----
+- **Time retention messages to the real cycle.** Send the repeat-purchase reminder around
+  day 90–120, not day 30. A day-30 campaign targets a window where only 17.7% are ready.
+- **Protect the At Risk pool first.** $153.8M sits in a segment that is cooling off. It
+  deserves the retention budget ahead of VIP perks.
+- **Stop treating mobile conversion as a failure.** It is the best acquisition channel by
+  customer value. Judge it on signup value, not session conversion.
+- **Push margin, not just volume.** Kitchen Appliances runs at 30.3% margin, Gaming at
+  11.1%. Category mix is a lever the current reporting ignores.
+- **Do not build cross-category bundles.** All 36 category pairs have lift below 1, and
+  the strongest product pair appears in 36 of 431,377 orders. There is no cross-sell
+  signal in this data.
+- **Report net revenue and track return rate** as a standing KPI.
 
-### 3. Customer Base Health & Retention Dynamics (RFM & Cohort Analysis)
-By integrating RFM segmentation with Cohort retention trends, we can look beyond top-of-funnel acquisition to evaluate the true health of the customer base. This analysis uncovers a stark contrast between a highly profitable core audience and a massive, immediate retention leak.
+![Products](IMAGE_4_URL)
 
-<img width="1043" height="1044" alt="1000184111" src="https://github.com/user-attachments/assets/4cc59e24-172a-4277-b612-0784d5fa1a20" /> <img width="1057" height="1013" alt="1000184112" src="https://github.com/user-attachments/assets/af67070e-300f-43ad-8437-2ff5cfbb9275" />
+## What changed after verification
 
+The first version of this project made claims that did not survive checking against the
+raw data. Three examples:
 
+- An "AOV of $1,628" was revenue per customer. True AOV is $989.
+- An "86% month-1 churn rate" treated non-purchase as churn in a non-contractual business.
+  Replaced with a censoring-aware time-to-second-purchase curve.
+- RFM scores were assigned by row order for customers with identical purchase counts,
+  affecting about 11,657 customers. Replaced with fixed value bands.
 
-* **The Retention Crisis: 53% of the Database is Churning, While a Core 18% Sustains the Business**
-  Following the Pareto (80/20) principle, this business relies heavily on a small core of users—VIPs (7%) and Loyal Customers (11%)—who make up only 18% of the total base but drive continuous, high-margin revenue with near-zero re-acquisition costs. Conversely, a staggering 53% of the database is either 'Lost' (25%) or 'At Risk' (28%), highlighting a massive profitability leak.
-* **The Month-1 Cliff: An 86% Immediate Churn Rate Exposes Onboarding Flaws**
-  Cohort analysis pinpoints exactly when the 'Lost' segment bleeds out. Across acquisition cohorts, an alarming 80-86% of customers churn immediately after their first purchase. For example, the January cohort dropped from 1,840 initial buyers to just 258 users in Month 1. The platform is highly effective at driving the first transaction but fails to create immediate post-purchase stickiness.
-* **The Retention Engine: A 70% Repeat Purchase Rate Drives a "Smile" Retention Curve**
-  Despite the severe Month-1 drop-off, the overall repeat purchase rate stands at a robust 70%. Interestingly, cohort retention rates unconventionally increase over time (e.g., the January cohort rebounded from 14% to 25.7% by Month 11). This "Smile Curve" indicates a 3-to-4 month buying cycle, aligning perfectly with the high-ticket nature of the products ($1,628 AOV). Once the initial churn is mitigated, the Long-Term Value (LTV) model is highly profitable.
-* **The Q4 Resurrection: End-of-Year Seasonality Reactivates Dormant Users**
-  A visual inspection of the cohort matrix reveals a sudden spike in retention across all previous cohorts during the final months of the year (reaching peaks of 25–27%). End-of-year and holiday campaigns successfully wake up dormant users, proving that early-churned customers are not permanently lost, but rather require targeted, seasonal re-engagement.
+Statistical tests, confidence intervals and the full metric definitions live in
+`analysis.py`, `analysis_output/`, and the Definitions tab of the dashboard.
 
----
+## Tech stack
 
-### 4. Marketing ROI: The Acquisition Trap vs. Organic Loyalty
-Evaluating traffic sources purely by top-of-funnel conversion rates creates a highly deceptive narrative. By cross-referencing clickstream acquisition channels with our RFM customer segments, the true Long-Term Value (LTV) and ROI of each marketing channel are definitively exposed.
+Python · DuckDB (SQL) · pandas · SciPy · Plotly · Streamlit
 
-<img width="2184" height="712" alt="1000184115" src="https://github.com/user-attachments/assets/2dd9926c-3d61-4e4f-99a5-8dde441d1d90" />
+## Run it yourself
 
-
-* **The Paid Acquisition Trap: High Initial Conversion, Zero Loyalty**
-  At first glance, Marketing Campaigns appear highly effective, driving the highest add-to-cart rates (35.12%) and overall funnel conversion (7.10%). However, RFM data exposes the "Conversion Illusion": these campaigns predominantly attract "discount hunters." Campaign traffic forms the highest percentage of the 'Lost' (9.1%) and 'Regular' (10.7%) segments, but the absolute lowest in the 'VIP' segment (only 3.0%). The Customer Acquisition Cost (CAC) spent here is essentially wasted on one-time buyers who contribute heavily to the Month-1 churn.
-* **The Hidden Treasure: Organic & Direct Traffic Drive Over 50% of VIPs**
-  Conversely, un-paid channels look terrible initially. Direct and Referral traffic have the lowest top-of-funnel conversion rates (~3.5%) and a massive 55%+ bounce rate (users leaving without viewing a single product). However, the small percentage of users who do buy from these channels are the true "whales." Organic Search accounts for 27.8% of all VIPs, and Direct traffic accounts for 22.9%. Brand-aware customers who specifically seek out the platform yield the highest LTV, regardless of initial funnel friction.
-* **The At-Risk Goldmine: 'At-Risk' Customers Share the Exact DNA as VIPs**
-  The most actionable finding in the entire analysis lies within the 'At Risk' segment. Their traffic source distribution (27.8% Organic, 22.0% Direct) is a near-perfect mirror image of the highly profitable 'VIP' segment. This definitively proves that 'At Risk' users are not low-quality leads acquired through cheap ads; they are potential VIPs who slipped through the cracks due to a lack of post-purchase engagement. Reactivating this specific group is a guaranteed high-ROI objective.
-
----
-
-### 5. Actionable Recommendations & Strategic Roadmap
-To translate these analytical findings into measurable revenue growth, the following strategic initiatives should be prioritized across their respective departments:
-
-**For the Product & UX Team:**
-* **Eliminate Checkout Friction:** With 66.4% of high-intent users abandoning their carts, a complete UX audit of the checkout flow is mandatory. Implementing one-click express checkout options (e.g., Apple Pay, Google Pay) is crucial, especially to rescue mobile users who represent 55% of all traffic but suffer from the lowest conversion rate (4.19%).
-* **Bridge the Digital-Physical Gap:** Capitalize on the $100M offline revenue and "webrooming" behavior by adding a prominent "Check In-Store Availability" feature directly on high-ticket product pages to facilitate offline conversion.
-* **Conduct Mobile UX A/B Testing & Optimize Core Web Vitals:** Address the high bounce rate at the top of the funnel by running rigorous A/B tests on the mobile interface. Focus on enlarging CTA button sizes, minimizing form fields, and improving page load speeds (Core Web Vitals). Resolving this poor mobile experience is the most critical step to stopping the hemorrhage of top-of-funnel traffic.
-
-**For the Operations & Retail Team:**
-* **Implement BOPIS (Buy Online, Pick Up In-Store):** Since users hesitate to purchase $1,600+ items entirely online without physical inspection, offering BOPIS will secure the transaction digitally while satisfying the customer's need for physical validation.
-* **Unify Omnichannel Loyalty:** Develop a unified Loyalty Program where customers earn and redeem points seamlessly across both the website and physical branches. This ensures accurate LTV tracking across channels and highly incentivizes the core 18% of users (VIPs & Loyal).
-
-**For the Growth & Marketing Team:**
-* **Reallocate CAC to 'At-Risk' Retargeting:** Immediately halt budget increases for generic, discount-driven campaigns, which currently fuel the 86% Month-1 churn rate and populate the 'Lost' segment. Instead, reallocate this ad spend toward retargeting the 'At-Risk' segment. Since their acquisition DNA (Organic/Direct) perfectly mirrors the VIP segment, they are highly recoverable.
-* **Deploy a Month-1 Retention Sequence:** Combat the massive 86% initial drop-off (The Month 1 Cliff) by launching an automated post-purchase "Welcome Series." This should focus on product education, warranty details, and brand value to build trust before the next 3-to-4 month buying cycle begins.
-* **Launch a VIP Referral Program:** Capitalize on the robust 70% repeat purchase rate by turning satisfied customers into brand advocates. Implementing a "Give $20, Get $20" referral program will organically scale Direct and Organic traffic—which our RFM analysis proved to be the absolute best sources for acquiring VIPs.
-* **Capitalize on Q4 Seasonality with Targeted Re-engagement:** Allocate 20% of the October and November marketing budget specifically to re-engage dormant customers (those whose last purchase was 6 to 9 months ago). Utilize exclusive seasonal offers, such as VIP Black Friday early access, to directly leverage the previously identified Q4 cohort resurrection trend.
-
----
-
-### 6. Next Steps & Success Metrics (Tracking Dashboard)
-To ensure these strategic initiatives drive the desired business impact, a dedicated tracking dashboard must be established to continuously monitor three vital KPIs post-implementation:
-
-1. **Cart Abandonment Rate:** To measure the success of the checkout UI/UX updates and express payment integrations.
-2. **Month-1 Retention Rate:** To validate the effectiveness of the new automated "Welcome Series" onboarding sequence.
-3. **'At-Risk' Activation Rate:** To track the conversion efficiency of the reallocated retargeting budget on the 'At-Risk' segment.
-
----
-
-## 🛠️ Reproducibility & Local Setup
-
-To replicate this analysis or run the interactive dashboard locally on your machine, follow these steps:
-
-**1. Data Source (Kaggle):** The raw datasets (`fact_transaction.parquet` and `fact_clickstream.parquet`) are required to execute the notebooks and SQL queries. Due to file size limits, they are not included in this repository.
-
-You can download the dataset directly from Kaggle:
-[🔗 Elecmart Retail Analytics Dataset](https://www.kaggle.com/datasets/ajibsss/elecmart-retail-analytics-dataset)
-
-Alternatively, use the Kaggle API CLI to download and extract the data into the root directory:
 ```bash
 kaggle datasets download -d ajibsss/elecmart-retail-analytics-dataset
 unzip -q elecmart-retail-analytics-dataset.zip
-```
----
-Environment Setup:
-git clone [https://github.com/frasmahomoud/Ecommerce-Performance-and-Retention-Analysis.git](https://github.com/frasmahomoud/Ecommerce-Performance-and-Retention-Analysis.git)
 
-cd Ecommerce-Performance-and-Retention-Analysis
 pip install -r requirements.txt
+python generate_summary.py    # writes every CSV in dashboards_CSV/
+python analysis.py            # writes statistical results and two figures
+streamlit run app.py
+```
 
+```
+app.py                dashboard, reads CSVs only
+generate_summary.py   all SQL, produces dashboards_CSV/
+analysis.py           statistical layer, produces analysis_output/
+dashboards_CSV/       25 aggregated files
+analysis_output/      statistical_results.csv, curve data, 2 figures
+```
+
+## Data and limitations
+
+Source: [ElecMart Retail Analytics Dataset](https://www.kaggle.com/datasets/ajibsss/elecmart-retail-analytics-dataset)
+(CC BY-SA 4.0). The data is synthetic.
+
+- 19% of 2025 revenue has no customer_id, so customer-level analysis covers 81% of revenue.
+- Store orders carry no session_id, so store revenue cannot be attributed to a channel.
+- Clickstream has no product_id, so browsing cannot be linked to the product purchased.
+- No advertising spend exists in the schema, so CAC and ROI cannot be computed.
+- Session duration is capped at 12 minutes with the same median on every device, so it
+  carries no behavioural signal.
+
+All comparisons are observational. No A/B test or holdout exists in this data.
