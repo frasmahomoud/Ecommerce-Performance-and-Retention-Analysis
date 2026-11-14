@@ -3,7 +3,6 @@
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![DuckDB](https://img.shields.io/badge/DuckDB-SQL-yellow)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 
 **[Live Dashboard](https://ecommerce-performance-and-retention-analysis.streamlit.app/)**
@@ -13,6 +12,7 @@ from a synthetic omnichannel electronics retailer. Main window: 2025, with a thr
 trend for context.
 
 <img width="1838" height="933" alt="1" src="https://github.com/user-attachments/assets/25d12090-0e19-4558-bb73-06b9f1cfcea8" />
+
 ## What this project does
 
 Reads the raw Kaggle parquet files, builds every metric in SQL, adds a statistical layer
@@ -66,6 +66,7 @@ $451.7M vs net $426.6M.
 - **Report net revenue and track return rate** as a standing KPI.
 
 <img width="1762" height="852" alt="4 1" src="https://github.com/user-attachments/assets/26431f9c-399f-4066-8a38-b59caa5751d7" />
+
 ## What changed after verification
 
 The first version of this project made claims that did not survive checking against the
@@ -100,7 +101,7 @@ streamlit run app.py
 app.py                dashboard, reads CSVs only
 generate_summary.py   all SQL, produces dashboards_CSV/
 analysis.py           statistical layer, produces analysis_output/
-dashboards_CSV/       25 aggregated files
+dashboards_CSV/       26 aggregated files
 analysis_output/      statistical_results.csv, curve data, 2 figures
 ```
 
