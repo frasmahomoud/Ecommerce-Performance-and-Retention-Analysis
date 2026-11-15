@@ -156,6 +156,7 @@ FROM sessions, orders;
                         yaxis="y2", mode="lines+markers", line=dict(color="#FF7F0E", width=3))
         fig.update_layout(
             title="Growth and Channel Shift, 2023-2025", height=380,
+            xaxis=dict(type="category"),
             yaxis=dict(title="Revenue ($M)"),
             yaxis2=dict(title="Store share (%)", overlaying="y", side="right", range=[0, 60]),
             legend=dict(orientation="h", y=-0.15), margin=dict(t=50, b=0, l=50, r=50), **CHART_BG)
