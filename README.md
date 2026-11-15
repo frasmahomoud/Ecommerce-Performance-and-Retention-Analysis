@@ -94,12 +94,14 @@ unzip -q elecmart-retail-analytics-dataset.zip
 pip install -r requirements.txt
 python generate_summary.py    # writes every CSV in dashboards_CSV/
 python analysis.py            # writes statistical results and two figures
+python generate_basket.py     # basket affinity and time-to-second-purchase
 streamlit run app.py
 ```
 
 ```
 app.py                dashboard, reads CSVs only
 generate_summary.py   all SQL, produces dashboards_CSV/
+generate_basket.py    basket affinity + second purchase, 6 CSVs
 analysis.py           statistical layer, produces analysis_output/
 dashboards_CSV/       26 aggregated files
 analysis_output/      statistical_results.csv, curve data, 2 figures
