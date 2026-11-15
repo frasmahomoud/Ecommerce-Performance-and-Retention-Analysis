@@ -1,0 +1,2 @@
+cohort_customers,repeated_customers,repeat_pct,median_days_to_second,p25_days,p75_days,pct_within_30d,pct_within_90d,pct_within_180d
+9392,6871,73.16,86.0,37.0,158.0,15.31,38.25,59.1

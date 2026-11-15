@@ -1,0 +1,4 @@
+device_type,total_sessions,conversion_rate,avg_pages_viewed,avg_duration_minutes,median_duration_minutes,orders,revenue,aov
+Mobile,3575320,4.19,3.77,2.85,2.0,149853,150401348.07,1003.66
+Desktop,1623970,6.16,5.67,2.85,2.0,100002,99683782.79,996.82
+Tablet,1300710,5.44,4.53,2.85,2.0,70729,70904828.27,1002.49

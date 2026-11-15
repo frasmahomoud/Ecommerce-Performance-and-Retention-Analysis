@@ -1,0 +1,16 @@
+Segment,signup_channel,total_customers,revenue
+At Risk,Mobile,10104,61010707.5
+At Risk,Online,10156,46785277.89
+At Risk,In-Store,10425,46014904.34
+Lost,Mobile,9356,15764643.13
+Lost,Online,10605,13323401.91
+Lost,In-Store,8627,12870182.91
+Loyal Customers,Mobile,3983,15484365.34
+Loyal Customers,In-Store,4820,15337511.22
+Loyal Customers,Online,4621,14166947.07
+Regular,Mobile,11259,17160655.33
+Regular,Online,13285,15477707.87
+Regular,In-Store,10504,14423954.19
+VIP,Mobile,2630,33012079.47
+VIP,Online,2234,23915363.18
+VIP,In-Store,2288,20982175.95
