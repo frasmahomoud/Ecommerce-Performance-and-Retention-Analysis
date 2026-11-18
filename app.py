@@ -817,3 +817,19 @@ with notes:
 - Discounts are negligible: 97.86% of orders have zero discount.
 - All comparisons are observational. No A/B test or holdout exists in this data.
 """)
+    st.divider()
+    st.subheader("Reproducibility")
+    st.code(
+        "generate_summary.py   reads the raw parquet files, writes 19 CSVs into dashboards_CSV/\n"
+        "generate_basket.py    basket affinity and time to second purchase, 6 more CSVs\n"
+        "analysis.py           statistical layer, writes analysis_output/\n"
+        "queries.sql           every query shown in these tabs, in one runnable file\n"
+        "app.py                this dashboard, reads the CSVs only",
+        language="text",
+    )
+    st.markdown(
+        "The dashboard performs no aggregation of its own beyond recomputing shares from the "
+        "counts already present in each file, so the numbers on screen and the numbers in the "
+        "queries come from the same place. Run the two generators once after downloading the "
+        "dataset from Kaggle."
+    )
