@@ -38,6 +38,13 @@ effect, not improving loyalty.
 
 **Silence in month 1 is not churn.** Median time to second purchase is 124 days. Only
 17.7% buy again within 30 days, but 61.8% do within 180.
+> Two medians appear in this project and they measure different things.
+> **86 days** is the median among the 6,871 Jan–Jun 2025 customers who did buy again —
+> conditional on repurchase, with 180+ days of follow-up for everyone.
+> **124 days** is the Kaplan-Meier median across all 16,387 customers whose first purchase
+> fell in 2025, treating the 6,575 who had not bought again by year end as censored.
+> The dashboard shows 86. The reminder timing uses 124, because it answers when half of a
+> cohort will have bought again, not how long the fastest half took.
 
 **Mobile converts worst and is worth the most.** Lowest session conversion (4.19% vs
 Desktop 6.16%, gap 1.97 pp, 95% CI −2.01 to −1.92) yet the highest AOV ($1,004) and the
@@ -60,9 +67,12 @@ $451.7M vs net $426.6M.
   customer value. Judge it on signup value, not session conversion.
 - **Push margin, not just volume.** Kitchen Appliances runs at 30.3% margin, Gaming at
   11.1%. Category mix is a lever the current reporting ignores.
-- **Do not build cross-category bundles.** All 36 category pairs have lift below 1, and
-  the strongest product pair appears in 36 of 431,377 orders. There is no cross-sell
-  signal in this data.
+- **Do not build cross-category bundles.** All 36 category pairs have lift below 1
+  (0.475 to 0.882), and the strongest product pair appears in only 36 of 431,377 orders.
+  Same-category pairs are excluded by design, because the question is cross-sell rather
+  than multi-buy. Baskets are capped at 1–3 items, so any within-category clustering
+  pushes cross-category lift down mechanically. The reading is "no cross-category
+  bundling signal", not "categories repel each other".
 - **Report net revenue and track return rate** as a standing KPI.
 
 <img width="1762" height="852" alt="4 1" src="https://github.com/user-attachments/assets/26431f9c-399f-4066-8a38-b59caa5751d7" />
