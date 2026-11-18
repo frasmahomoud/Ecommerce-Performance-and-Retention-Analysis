@@ -97,7 +97,6 @@ Python · DuckDB (SQL) · pandas · SciPy · Plotly · Streamlit
 
 ## Run it yourself
 
-
 The dashboard performs no aggregation of its own. Shares are recomputed from the counts
 already present in each CSV, so a stale percentage column can never change what you see.
 The SQL shown in each tab is the same SQL the generators run.
@@ -105,16 +104,20 @@ The SQL shown in each tab is the same SQL the generators run.
 ```bash
 kaggle datasets download -d ajibsss/elecmart-retail-analytics-dataset
 unzip -q elecmart-retail-analytics-dataset.zip
+
 pip install -r requirements.txt
 python generate_summary.py
 python generate_basket.py
 python analysis.py
 streamlit run app.py
 ```
+
+```text
 app.py                dashboard, reads CSVs only
-generate_summary.py   all SQL, produces dashboards_CSV/
-generate_basket.py    basket affinity + second purchase, 6 CSVs
-analysis.py           statistical layer, produces analysis_output/
+generate_summary.py   all SQL, writes 19 CSVs into dashboards_CSV/
+generate_basket.py    basket affinity + time to second purchase, 6 more CSVs
+analysis.py           statistical layer, writes analysis_output/
+queries.sql           every query shown in the tabs, in one runnable file
 dashboards_CSV/       26 aggregated files
 analysis_output/      statistical_results.csv, curve data, 2 figures
 ```
@@ -124,11 +127,18 @@ analysis_output/      statistical_results.csv, curve data, 2 figures
 Source: [ElecMart Retail Analytics Dataset](https://www.kaggle.com/datasets/ajibsss/elecmart-retail-analytics-dataset)
 (CC BY-SA 4.0). The data is synthetic.
 
-- 19% of 2025 revenue has no customer_id, so customer-level analysis covers 81% of revenue.
-- Store orders carry no session_id, so store revenue cannot be attributed to a channel.
-- Clickstream has no product_id, so browsing cannot be linked to the product purchased.
+- 19% of 2025 revenue has no `customer_id`, so customer-level analysis covers 81% of revenue.
+- Store orders carry no `session_id`, so store revenue cannot be attributed to a channel.
+- Clickstream has no `product_id`, so browsing cannot be linked to the product purchased.
 - No advertising spend exists in the schema, so CAC and ROI cannot be computed.
 - Session duration is capped at 12 minutes with the same median on every device, so it
   carries no behavioural signal.
+- Basket size is always 1–3 items and gross margin is flat near 18.7% across segments,
+  channels and price tiers. Only category margin varies.
+- Only successful purchases are recorded, completed or returned. There are no failed
+  checkout attempts, so checkout friction cannot be measured.
+- Transactions start in 2023 while signup dates reach back to 2001, so cohorts measure
+  first purchase inside the window, not acquisition.
+- Discounts are negligible: 97.86% of orders carry zero discount.
 
 All comparisons are observational. No A/B test or holdout exists in this data.
