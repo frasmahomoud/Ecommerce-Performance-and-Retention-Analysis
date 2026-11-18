@@ -817,6 +817,3 @@ with notes:
 - Discounts are negligible: 97.86% of orders have zero discount.
 - All comparisons are observational. No A/B test or holdout exists in this data.
 """)
-
-    st.subheader("Reproducibility")
-    st.markdown("""
