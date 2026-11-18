@@ -97,17 +97,19 @@ Python · DuckDB (SQL) · pandas · SciPy · Plotly · Streamlit
 
 ## Run it yourself
 
+
+The dashboard performs no aggregation of its own. Shares are recomputed from the counts
+already present in each CSV, so a stale percentage column can never change what you see.
+The SQL shown in each tab is the same SQL the generators run.
+
 ```bash
 kaggle datasets download -d ajibsss/elecmart-retail-analytics-dataset
 unzip -q elecmart-retail-analytics-dataset.zip
-
 pip install -r requirements.txt
-python generate_summary.py    # writes every CSV in dashboards_CSV/
-python analysis.py            # writes statistical results and two figures
-python generate_basket.py     # basket affinity and time-to-second-purchase
+python generate_summary.py
+python generate_basket.py
+python analysis.py
 streamlit run app.py
-```
-
 ```
 app.py                dashboard, reads CSVs only
 generate_summary.py   all SQL, produces dashboards_CSV/
